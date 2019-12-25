@@ -14,15 +14,18 @@ import RichTextArial from './components/RichText';
 
 export interface IRichTextWebPartProps {
   description: string;
+  myRichText: string;
 }
 
 export default class RichTextWebPart extends BaseClientSideWebPart<IRichTextWebPartProps> {
 
   public render(): void {
-    const element: React.ReactElement<IRichTextProps > = React.createElement(
+    const element: React.ReactElement<IRichTextProps> = React.createElement(
       RichTextArial,
       {
-        description: this.properties.description
+        description: this.properties.description,
+        myRichText: this.properties.myRichText,
+        changeRichText:this.changemyRichText,
       }
     );
 
@@ -31,6 +34,11 @@ export default class RichTextWebPart extends BaseClientSideWebPart<IRichTextWebP
 
   protected onDispose(): void {
     ReactDom.unmountComponentAtNode(this.domElement);
+  }
+
+  public changemyRichText = (text)=> {
+    this.properties.myRichText = text;
+    return text;
   }
 
   protected get dataVersion(): Version {
